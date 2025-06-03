@@ -842,7 +842,7 @@
             <!-- Speed Trial -->
             <div id="speedTrial" class="screen">
                 <div class="title">Speed Trial</div>
-                <div class="subtitle">Race against the Speed Demon! Press any key repeatedly!</div>
+                <div class="subtitle">Race against the Speed Demon! Press any key or tap the screen repeatedly!</div>
                 <div id="speedTrack">
                     <div id="playerRunner" class="runner"><img src="speedRacer.png" alt="Player Racer"></div>
                     <div id="npcRunner" class="runner"><img src="speedRacer.png" alt="NPC Racer" style="transform: scaleX(-1);"></div> {/* Flipped for NPC */}
@@ -1322,8 +1322,9 @@
             document.getElementById('playerRunner').style.left = '0%';
             document.getElementById('npcRunner').style.left = '0%';
             
-            // Add keyboard listener for any key press
+            // Add event listeners
             document.addEventListener('keydown', handleRaceKeydown);
+            document.getElementById('speedTrack').addEventListener('touchstart', handleRaceInput, { passive: false });
             
             // Start NPC movement
             raceInterval = setInterval(updateRace, 50);
@@ -1341,17 +1342,29 @@
             }, 1000);
         }
 
-        function handleRaceKeydown(e) {
-            if (!isRacing || e.key === 'Escape') return;
+        // Combined input handler for key presses and taps
+        function handleRaceInput(e) {
+            if (!isRacing) return;
             
-            // Move player forward on any key press
-            playerPosition += 3; // Increased from 2 to make it easier
+            // Prevent default touch behavior like scrolling if it's a touch event
+            if (e && e.type === 'touchstart') {
+                e.preventDefault();
+            }
+
+            // Move player forward
+            playerPosition += 3; 
             document.getElementById('playerRunner').style.left = `${playerPosition}%`;
             
             // Check win condition
             if (playerPosition >= 95) {
                 endRace(true);
             }
+        }
+
+        function handleRaceKeydown(e) {
+            // Allow escape to still be processed for other potential uses, otherwise trigger race input
+            if (e.key === 'Escape') return; 
+            handleRaceInput(); // Pass no event, as it's a keydown
         }
 
         function updateRace() {
@@ -1370,7 +1383,9 @@
         function endRace(playerWon) {
             isRacing = false;
             clearInterval(raceInterval);
+            // Remove event listeners
             document.removeEventListener('keydown', handleRaceKeydown);
+            document.getElementById('speedTrack').removeEventListener('touchstart', handleRaceInput);
             
             if (playerWon) {
                 createFloatingText("Victory! You've outrun the Speed Demon!", document.getElementById('speedTrack'));
