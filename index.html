@@ -768,7 +768,7 @@
             <div id="carvingGame" class="screen">
                 <div class="subtitle">Trace the key shape carefully</div>
                 <div style="display: flex; align-items: center; gap: 20px;">
-                    <canvas id="carvingCanvas" width="400" height="300"></canvas>
+                    <canvas id="carvingCanvas" width="300" height="225"></canvas>
                     <div>
                         <div id="precisionMeter">
                             <div id="precisionFill"></div>
@@ -998,28 +998,29 @@
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw key template (simple key shape)
+            // Scaled key drawing (original 400x300, new 300x225, scale = 0.75)
+            const s = 0.75;
             ctx.strokeStyle = '#ffd700';
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 3 * s; // Scale line width too for proportion
             ctx.beginPath();
             // Key shaft
-            ctx.moveTo(50, 150);
-            ctx.lineTo(300, 150);
+            ctx.moveTo(50 * s, 150 * s);
+            ctx.lineTo(300 * s, 150 * s);
             // Key head (circle)
-            ctx.arc(50, 150, 30, 0, 2 * Math.PI);
+            ctx.arc(50 * s, 150 * s, 30 * s, 0, 2 * Math.PI);
             // Key teeth
-            ctx.moveTo(300, 150);
-            ctx.lineTo(300, 130);
-            ctx.moveTo(300, 150);
-            ctx.lineTo(300, 170);
-            ctx.moveTo(280, 150);
-            ctx.lineTo(280, 140);
+            ctx.moveTo(300 * s, 150 * s);
+            ctx.lineTo(300 * s, 130 * s);
+            ctx.moveTo(300 * s, 150 * s);
+            ctx.lineTo(300 * s, 170 * s);
+            ctx.moveTo(280 * s, 150 * s);
+            ctx.lineTo(280 * s, 140 * s);
             ctx.stroke();
             
-            // Set up key template points for precision checking
+            // Set up key template points for precision checking (scaled)
             keyTemplate = [
-                {x: 50, y: 150}, {x: 100, y: 150}, {x: 150, y: 150}, 
-                {x: 200, y: 150}, {x: 250, y: 150}, {x: 300, y: 150}
+                {x: 50*s, y: 150*s}, {x: 100*s, y: 150*s}, {x: 150*s, y: 150*s}, 
+                {x: 200*s, y: 150*s}, {x: 250*s, y: 150*s}, {x: 300*s, y: 150*s}
             ];
             
             carvingPath = [];
@@ -1086,18 +1087,19 @@
             if (carvingPath.length === 0) return;
 
             let closePoints = 0;
-            const threshold = 25; // Increased from 15, making it more lenient
+            const s = 0.75; // Scale factor based on new canvas size (300/400)
+            const threshold = Math.round(25 * s); // Scaled threshold, was 25, now ~19
 
             // A more robust solution would check distance to line segments of the template
-            // For this version, we simplify by checking proximity to key points of the template
+            // For this version, we simplify by checking proximity to key points of the template (scaled)
             for (const pathPoint of carvingPath) {
                 let onTemplate = false;
-                // Check against a simplified representation of the key template
-                // This should be expanded based on the actual keyTemplate points defined in initializeCarvingGame
+                // Check against a simplified representation of the key template (scaled)
                 const simplifiedTemplate = [
-                    {x: 50, y: 150}, {x: 100, y: 150}, {x: 150, y: 150}, {x: 200, y: 150}, {x: 250, y: 150}, {x: 300, y: 150}, // Shaft
-                    {x: 50, y: 120}, {x: 50, y: 180}, // Part of head
-                    {x: 300, y: 130}, {x: 300, y: 170}, {x:280, y:140} // Teeth
+                    {x: 50*s, y: 150*s}, {x: 100*s, y: 150*s}, {x: 150*s, y: 150*s}, 
+                    {x: 200*s, y: 150*s}, {x: 250*s, y: 150*s}, {x: 300*s, y: 150*s}, // Shaft
+                    {x: 50*s, y: 120*s}, {x: 50*s, y: 180*s}, // Part of head (approx from arc r=30*s around 50*s,150*s)
+                    {x: 300*s, y: 130*s}, {x: 300*s, y: 170*s}, {x:280*s, y:140*s} // Teeth
                 ];
 
                 for (const templatePoint of simplifiedTemplate) { 
@@ -1124,7 +1126,7 @@
             document.getElementById('progressText').textContent = `${Math.round(precision)}%`;
             // Approximation of carving progress based on path length vs an arbitrary estimate of full path length
             // This could be improved by measuring against the actual template length
-            const estimatedFullPathLength = 400; // Arbitrary value, adjust based on template complexity
+            const estimatedFullPathLength = Math.round(400 * s); // Scaled, was 400, now 300
             document.getElementById('carvingProgress').style.width = `${Math.min(100, (carvingPath.length / estimatedFullPathLength) * 100)}%`; 
         }
 
