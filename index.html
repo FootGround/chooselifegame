@@ -30,9 +30,9 @@
         }
         
         #gameScreen {
-            width: 90vw;
+            width: 95vw;
             max-width: 1200px;
-            height: 80vh;
+            height: 90vh;
             background: linear-gradient(45deg, #2c1810, #1a0f0a);
             border: 3px solid #8b4513;
             border-radius: 15px;
@@ -58,7 +58,7 @@
         }
         
         .title {
-            font-size: 3rem;
+            font-size: 2.2rem;
             color: #d4af37;
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
@@ -738,6 +738,89 @@
             position: relative;
             margin: 20px 0;
         }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8rem; /* Further reduce title size on small screens */
+                margin-bottom: 1rem;
+            }
+
+            #gameScreen {
+                border-width: 2px;
+                border-radius: 10px;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+                line-height: 1.4;
+            }
+
+            .button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+
+            #carvingSetupContainer {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px; /* Adjust gap for vertical layout */
+            }
+
+            #carvingSetupContainer > canvas#carvingCanvas {
+                width: 90%; /* Allow canvas to take more width */
+                max-width: 300px; /* But not more than its defined resolution */
+                height: auto; /* Maintain aspect ratio */
+            }
+
+            #carvingSetupContainer > div { /* Container of precisionMeter */
+                margin-left: 0; /* Reset margin for vertical stacking */
+                margin-top: 15px;
+            }
+
+            #precisionMeter {
+                width: 25px; /* Slightly smaller */
+                height: 150px;
+            }
+
+            #combatArena {
+                width: 90%;
+                height: auto;
+                aspect-ratio: 4 / 3;
+                max-width: 400px; /* Respect original max size if screen is wide enough */
+            }
+
+            #bossArena {
+                width: 90%;
+                height: auto;
+                aspect-ratio: 5 / 4;
+                max-width: 500px; /* Respect original max size */
+            }
+
+            #speedTrack {
+                height: 120px; /* Was 100px */
+            }
+            
+            .runner {
+                 width: 50px; /* Adjust runner size if track is taller */
+                 height: 70px;
+            }
+
+            #chippableRockContainer {
+                width: 220px;
+                height: 220px;
+            }
+
+            #chippableRock {
+                font-size: 4.5rem; /* Adjust emoji size */
+            }
+
+            #level2Doors .door {
+                width: 100px; /* Slightly smaller doors if screen is very narrow */
+                height: 160px;
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -767,7 +850,7 @@
             
             <div id="carvingGame" class="screen">
                 <div class="subtitle">Trace the key shape carefully</div>
-                <div style="display: flex; align-items: center; gap: 20px;">
+                <div id="carvingSetupContainer" style="display: flex; align-items: center; gap: 20px;">
                     <canvas id="carvingCanvas" width="300" height="225"></canvas>
                     <div>
                         <div id="precisionMeter">
