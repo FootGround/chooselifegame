@@ -1,0 +1,429 @@
+﻿The Trial of Precision - Development Specifications
+🎭 CHARACTER SPECIFICATIONS
+PLAYER CHARACTER
+Name: The Seeker
+Art Style: Hand-drawn crayon aesthetic
+Size: 64x64 pixels (base sprite)
+Animation Frames: 8-frame walk cycle, 4-frame idle, 6-frame interaction
+
+
+Visual Description:
+- Simple humanoid figure with medieval adventurer appearance
+- Color palette: Earth tones (browns, muted greens)
+- Equipment: Sword visible on hip, simple tunic and pants
+- Facial features: Minimal but expressive eyes
+- Hair: Simple brown/black sketch style
+
+
+Animations Required:
+- idle_front, idle_back, idle_left, idle_right
+- walk_front, walk_back, walk_left, walk_right
+- carve_precision (detailed hand movement)
+- sword_draw, sword_swing
+- celebrate_victory, despair_failure
+- key_pickup, door_unlock
+
+
+States:
+- Normal exploration
+- Precision carving mode
+- Combat stance
+- Victory celebration
+
+
+SUPPORTING CHARACTERS
+Fast Racing Runner (Level 3)
+Name: Speed Demon
+Art Style: Streamlined, dynamic crayon strokes
+Size: 64x64 pixels
+Color: Bright blue with motion blur effects
+
+
+Animations:
+- sprint_cycle (4 frames, high speed)
+- jump_obstacle, slide_under
+- victory_taunt, defeat_slump
+
+
+Combat Enemies (Strength Trial)
+Enemy Type: Cave Goblins
+Count: 3-5 per wave
+Size: 48x48 pixels (smaller than player)
+Color: Dark greens and grays
+
+
+Animations:
+- idle_aggressive, walk_menacing
+- attack_wind_up (2-second telegraph)
+- attack_strike, recoil_hit
+- death_dissolve
+
+
+Giant Boss (Sword Duel)
+Name: The Stone Titan
+Size: 192x256 pixels (3x4 tiles)
+Art Style: Massive, intimidating crayon sketch
+Color: Stone gray with glowing red eyes
+
+
+Animations:
+- idle_breathing (slow, ominous)
+- slam_attack (ground pound)
+- weakened_state (per sword collected)
+- final_collapse
+
+
+________________
+
+
+🖼️ SCREEN SPECIFICATIONS
+LEVEL 1 SCREENS
+Screen 1.1: Level Intro
+Resolution: 1920x1080 (scalable)
+Background: Dark cave_cavern_bg.png
+Elements:
+- Ambient lighting shader (flickering torches)
+- Text overlay: Custom medieval font, size 48px
+- Continue button: 200x60px, bottom center
+- Sound: ambient_cave_drips.ogg
+
+
+Layout:
+[Background Image: Cave Entrance]
+[Center Text: "Approach the rock. Carve with precision—do not smash."]
+[Bottom: Continue Button]
+
+
+Screen 1.2: Gameplay Main
+Camera: Third-person fixed angle
+UI Elements:
+- Health indicator (top left): Rock integrity meter
+- Interaction prompt (center): "Press E to carve" when near rock
+- Inventory slot (top right): Shows obtained keys
+
+
+Game Objects:
+- player_character (spawn at cave_entrance_marker)
+- carving_rock (center position, clickable/interactive)
+- ambient_particles (dust, torch flames)
+- collision_boundaries (invisible walls)
+
+
+Interactive Zones:
+- rock_interaction_trigger (3x3 tiles around rock)
+- level_exit_door (locked until key obtained)
+
+
+Screen 1.3: Carving Minigame
+View: Close-up camera on rock surface
+Resolution: Full screen overlay
+Background: Blurred main game view
+
+
+UI Components:
+- Template outline (key shape): stroke-width: 3px, color: golden
+- Player trace line: real-time drawing, color: white
+- Precision meter: vertical bar, right side
+- Timer: 30 seconds, top center
+- Success threshold: 80% accuracy required
+
+
+Input Method:
+- Mouse: Click and drag to carve
+- Touch: Finger trace (mobile)
+- Gamepad: Right stick with trigger pressure
+
+
+Success Conditions:
+- Stay within 5 pixels of template line
+- Complete shape within time limit
+- No backtracking allowed
+
+
+LEVEL 2 SCREENS
+Screen 2.1: Choice Chamber
+Background: two_door_chamber_bg.png
+Lighting: Dynamic red/green glow effects
+
+
+Door Specifications:
+Left Door (Red):
+- Color: Deep crimson (#8B0000)
+- Glyph: Skull-like symbol
+- Particle effect: Ominous red smoke
+- Audio: dark_whispers.ogg (looping, low volume)
+
+
+Right Door (Green):
+- Color: Forest green (#228B22)
+- Glyph: Tree/nature symbol  
+- Particle effect: Gentle green sparkles
+- Audio: peaceful_chimes.ogg (occasional)
+
+
+UI Elements:
+- Key inventory icon (shows obtained key)
+- Decision prompt: "Choose your path wisely"
+- Hover effects on doors (brightness +20%)
+
+
+Screen 2.2: Consequence Screen (Bad Choice)
+Background: trap_chamber_bg.png
+Effects: 
+- Screen shake (magnitude: 5px, duration: 2s)
+- Red damage flash overlay
+- Spike/flame animations
+
+
+Text Display:
+- Font: Same medieval style
+- Size: 36px
+- Color: Red (#FF0000)
+- Position: Center screen
+- Animation: Fade in over 1 second
+
+
+Buttons:
+- "Restart Level 2": 250x70px
+- "Main Menu": 200x70px
+- Position: Bottom center, stacked vertically
+
+
+LEVEL 3 SCREENS
+Screen 3.1: Good World Entry
+Background: Transition animation from dark to light
+Duration: 3 seconds
+Start: Dark cave environment
+End: Bright outdoor arena
+
+
+Transition Effects:
+- Fade to white at 1.5s
+- Particle burst (golden sparkles)
+- Camera zoom out to reveal arena
+
+
+Welcome Text:
+- "Welcome to the Good World"
+- "Prove your worth through three trials"
+- Auto-advance after 4 seconds
+
+
+Screen 3.2: Trial Selection Hub
+Layout: Triangular arrangement of trial entrances
+Background: arena_hub_bg.png
+
+
+Trial Pedestals:
+1. Speed Trial (Top):
+   - Icon: Running figure sprite
+   - Status: Available/Completed checkmark
+   - Hover effect: Icon bounce animation
+
+
+2. Strength Trial (Bottom Left):
+   - Icon: Crossed swords sprite
+   - Wave indicator: "Defeat 5 enemies"
+
+
+3. Giant Duel (Bottom Right):
+   - Icon: Giant silhouette sprite
+   - Requirement: "Collect and use swords"
+
+
+Progress UI:
+- Top center: "Trials Completed: X/3"
+- Trail connections light up when completed
+
+
+Screen 3.3: Speed Trial
+View: Side-scrolling runner view
+Background: Scrolling cave_tunnel_bg.png (parallax)
+Speed: 8 pixels/frame background scroll
+
+
+Obstacles:
+- spike_pits: Jump required (spacebar/tap)
+- low_ceilings: Duck required (down arrow/swipe down)
+- moving_rocks: Time-based avoidance
+
+
+Player vs NPC:
+- Split screen OR ghost racer
+- Speed demon starts with 2-second head start
+- Finish line at 2000 pixels
+
+
+Controls:
+- Jump: Spacebar/Touch up
+- Duck: Down arrow/Touch down
+- No left/right movement (auto-run)
+
+
+Screen 3.4: Strength Trial
+View: Top-down combat arena
+Arena Size: 800x600 pixels
+Player spawn: Center position
+
+
+Enemy Waves:
+Wave 1: 3 goblins, spawn from north entrances
+Wave 2: 4 goblins, spawn from corners
+Wave 3: 5 goblins + 1 larger enemy
+
+
+Combat System:
+- Click/tap to attack in direction
+- Enemy telegraph: Red outline 2 seconds before attack
+- Player health: 3 hits (hearts UI)
+- Enemy health: 1-2 hits each
+
+
+Victory Condition: Survive all waves
+
+
+Screen 3.5: Giant Sword Duel
+View: Third-person boss arena
+Arena: Circular platform, 1000x1000 pixels
+Boss: Center position, slower movement
+
+
+Sword Mechanics:
+- 8 swords scattered around arena perimeter
+- Player must collect and "throw" at giant
+- Each sword = 1/8 of giant's health
+- Giant becomes more aggressive as health decreases
+
+
+Boss Phases:
+Phase 1 (8-6 swords): Slow ground pounds
+Phase 2 (5-3 swords): Faster attacks, charges
+Phase 3 (2-1 swords): Desperate, continuous attacks
+
+
+UI Elements:
+- Giant health bar (top)
+- Sword counter (bottom right)
+- Dodge roll cooldown indicator
+
+
+LEVEL 4 SCREENS
+Screen 4.1: Altar Chamber
+Background: Sacred chamber with ethereal mist
+Lighting: Soft, divine illumination from above
+Center: Ancient stone altar (interactive)
+
+
+Atmosphere:
+- Particle effects: Floating light orbs
+- Audio: Sacred_ambience.ogg (choir-like)
+- Screen tint: Slightly golden overlay
+
+
+Inventory Display:
+- Sword collection UI (top of screen)
+- Drag-and-drop interface
+- Each sword shows rarity/power level
+
+
+Screen 4.2: Sacrifice Ritual
+Animation Sequence:
+1. Sword placed on altar (player drag-drop)
+2. Altar glows with increasing intensity (2 seconds)
+3. Sword dissolves into energy particles (1 second)
+4. Energy coalesces into new rock material (2 seconds)
+5. New carving rock appears ready for final key
+
+
+Visual Effects:
+- Particle systems: Sword→Energy→Rock transformation
+- Screen flash at peak transformation
+- Camera shake (gentle, 1 pixel magnitude)
+
+
+Audio Cues:
+- Mystical chime when sword placed
+- Building energy sound (crescendo)
+- Transformation completion bell
+
+
+Screen 4.3: Final Carving
+Enhanced version of Level 1 carving minigame
+
+
+Differences:
+- More ornate key template (decorative elements)
+- Golden precision meter instead of standard
+- Increased difficulty (tighter tolerance)
+- Magical particle effects during carving
+- Success threshold: 90% accuracy required
+
+
+Victory Animation:
+- Completed key glows with divine light
+- Camera pulls back to show full rock
+- Key automatically added to inventory
+- Transition to final door
+
+
+Screen 4.4: Final Door & Victory
+Door Specifications:
+- Size: Fills 80% of screen height
+- Material: Ornate gold and crystal design
+- Keyhole: Center position, glowing
+- Animation: Elaborate unlocking sequence (5 seconds)
+
+
+Victory Sequence:
+1. Key insertion animation (2s)
+2. Door mechanisms activate (gears, crystals) (3s)
+3. Door swings open revealing paradise (2s)
+4. Camera moves through doorway (3s)
+5. Paradise garden environment revealed
+6. Victory text overlay with credits scroll
+
+
+Paradise Environment:
+- Background: Lush garden with golden sky
+- Foreground: Flowering trees and streams
+- Character: Player transformed (glowing aura)
+- Music: Triumphant orchestral piece
+
+
+________________
+
+
+📱 TECHNICAL SPECIFICATIONS
+Resolution Support
+Primary: 1920x1080 (16:9)
+Secondary: 1280x720 (16:9)
+Mobile Portrait: 720x1280 (9:16)
+Mobile Landscape: 1280x720 (16:9)
+Tablet: 1024x768 (4:3)
+
+
+Asset Naming Convention
+Backgrounds: bg_[location]_[variant].png
+Characters: char_[name]_[animation]_[frame].png
+UI Elements: ui_[element]_[state].png
+Audio: sfx_[action].ogg, music_[location].ogg
+Effects: fx_[type]_[frame].png
+
+
+Performance Targets
+Target FPS: 60 (desktop), 30 (mobile)
+Maximum texture size: 2048x2048
+Sprite batch limit: 1000 objects per frame
+Audio compression: OGG Vorbis, 44.1kHz
+Loading time per level: <3 seconds
+
+
+Accessibility Features
+- Colorblind support: Alternative visual indicators
+- Hearing impaired: Visual feedback for all audio cues
+- Motor impaired: Adjustable precision timing
+- Text scaling: 100%, 125%, 150% options
+- High contrast mode: Available in settings
+
+
+This specification provides the foundation for development while maintaining the charming hand-drawn aesthetic and meaningful gameplay progression you've designed.

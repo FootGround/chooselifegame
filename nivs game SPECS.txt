@@ -1,0 +1,170 @@
+﻿Game Screens Breakdown - The Trial of Precision
+🎮 CORE GAMEPLAY SCREENS
+LEVEL 1: The Trial of Precision
+1. Level 1 Intro Screen
+
+   * Cavernous dungeon background with ambient lighting
+   * Text overlay: "Approach the rock. Carve with precision—do not smash."
+   * Continue button to enter gameplay
+   2. Level 1 Gameplay Screen
+
+      * Main game view: Player character, rock, sword in hand
+      * Precision carving interface overlay when interacting with rock
+      * Health/attempt indicator for the rock (visual cracks = failure approaching)
+      3. Carving Minigame Screen
+
+         * Close-up view of rock surface
+         * Key outline template to trace
+         * Precision meter/timing indicator
+         * Tool tip: "Hold and release gently to carve"
+         4. Level 1 Success Screen
+
+            * Carved key glowing in rock
+            * "Key obtained!" message
+            * Transition animation to Level 2
+            5. Level 1 Failure Screen
+
+               * Shattered rock pieces
+               * "You have destroyed the key. Try again."
+               * Restart Level button
+LEVEL 2: The Great Choice
+               6. Level 2 Intro Screen
+
+                  * Two-door chamber view
+                  * Red and green glyphs glowing above doors
+                  * Key inventory visible in UI
+                  7. Choice Decision Screen
+
+                     * Close-up of both doors with atmospheric effects
+                     * Whisper audio cues (subtitled)
+                     * Left door: Ominous red glow, warning whispers
+                     * Right door: Gentle green light, encouraging whispers
+                     * Key usage prompt when player approaches either door
+                     8. Bad Choice Consequence Screen
+
+                        * Dark trap chamber with spikes/flames
+                        * "You have chosen poorly. The path ends here."
+                        * Game Over options: Restart Level 2 or Main Menu
+LEVEL 3: The Triple Trial of Good World
+                        9. Good World Entry Screen
+
+                           * Transition from dark chamber to brighter realm
+                           * "Welcome to the Good World. Prove your worth through three trials."
+                           * Overview of three competition icons
+                           10. Competition Selection Screen
+
+                              * Hub area with three trial pedestals/entrances
+                              * Speed Trial (runner icon), Strength Trial (combat icon), Sword Duel (giant icon)
+                              * Progress tracking for completed trials
+                              11. Speed Trial Screen
+
+                                 * Side-scrolling obstacle course
+                                 * Player character vs "Fast Racing Runner" (split-screen or ghost mode)
+                                 * Obstacle indicators: jump, duck, slide prompts
+                                 * Finish line and timer display
+                                 12. Strength Trial Screen
+
+                                    * Combat arena with multiple enemy waves
+                                    * Button mashing/combo indicators
+                                    * Enemy wind-up attack telegraphs
+                                    * Health bars for player and enemies
+                                    13. Giant Sword Duel Screen
+
+                                       * Boss arena with massive giant opponent
+                                       * Multiple sword collection points around arena
+                                       * Giant health bar that decreases with each sword collected
+                                       * Multi-stage combat phases
+                                       14. Trial Completion Screen
+
+                                          * Victory celebration for each trial
+                                          * Progress indicator showing completed challenges
+                                          * Transition to Level 4 when all three are complete
+LEVEL 4: Sacrifice & Transformation
+                                          15. Altar Chamber Screen
+
+                                             * Misty, sacred atmosphere
+                                             * Ancient altar in center
+                                             * Sword inventory showing available swords for sacrifice
+                                             16. Sacrifice Ritual Screen
+
+                                                * Drag-and-drop interface for sword selection
+                                                * Transformation animation: sword → glowing energy → rock
+                                                * Sacred particle effects and audio cues
+                                                17. Final Carving Screen
+
+                                                   * Similar to Level 1 but with enhanced visuals
+                                                   * More ornate key design to trace
+                                                   * Golden/magical precision meter
+                                                   18. Final Door Screen
+
+                                                      * Massive ornate door with final key slot
+                                                      * Anticipation-building camera work
+                                                      * Key insertion and door opening animation
+                                                      19. True Good World Victory Screen
+
+                                                         * Paradise garden environment
+                                                         * Triumphant music crescendo
+                                                         * Character transformation/enlightenment visual
+                                                         * Victory text and credits transition
+🖼️ SUPPORTING SCREENS
+Pre-Game Flow
+                                                         20. Main Menu Screen
+
+                                                            * Game title with mystical font
+                                                            * New Game, Continue, Settings, Quit options
+                                                            * Background: Subtle animated cave entrance
+                                                            21. Story Introduction Screen
+
+                                                               * Narrative setup with crayon-style illustrations
+                                                               * Voice-over or text explaining the journey ahead
+                                                               * Skip option for repeat players
+System Screens
+                                                               22. Pause Menu Screen
+
+                                                                  * Semi-transparent overlay during gameplay
+                                                                  * Resume, Restart Level, Settings, Main Menu options
+                                                                  * Doesn't break immersion with simple design
+                                                                  23. Settings Screen
+
+                                                                     * Audio controls (Music, SFX, Voice)
+                                                                     * Display options (Fullscreen, Resolution)
+                                                                     * Control customization
+                                                                     * Language selection (Hebrew/English toggle)
+                                                                     24. Inventory/Status Screen
+
+                                                                        * Current items (keys, swords collected)
+                                                                        * Progress tracking across levels
+                                                                        * Accessible via dedicated button during gameplay
+Transition Screens
+                                                                        25. Loading Screens
+
+                                                                           * Level-appropriate artwork with progress bars
+                                                                           * Tips about precision, choice, and sacrifice themes
+                                                                           * Seamless transitions between major areas
+                                                                           26. Game Over Screen
+
+                                                                              * Failure-specific messaging based on where player died
+                                                                              * Options: Retry Level, Return to Hub, Main Menu
+                                                                              * Encouragement text about learning from mistakes
+🎨 VISUAL CONSISTENCY NOTES
+Screen Design Principles
+                                                                              * Crayon Art Style: All screens maintain hand-drawn aesthetic from concept
+                                                                              * Dynamic Lighting: Each area has distinct mood lighting (dark caves → bright paradise)
+                                                                              * Custom Glyphs: Mystical symbols consistent across all UI elements
+                                                                              * Minimalist UI: Clean, uncluttered interfaces that don't distract from art
+Responsive Elements
+                                                                              * Mobile Optimization: Touch-friendly button sizes and gesture recognition
+                                                                              * Aspect Ratio Support: 16:9, 4:3, and mobile portrait orientations
+                                                                              * Accessibility: High contrast options, subtitle support, colorblind-friendly indicators
+🔧 TECHNICAL IMPLEMENTATION PRIORITIES
+Critical Path Screens (MVP)
+                                                                              1. Level 1 Gameplay + Carving Minigame
+                                                                              2. Level 2 Choice Decision
+                                                                              3. Basic Level 3 Combat
+                                                                              4. Level 4 Sacrifice + Victory
+Enhancement Screens (Post-MVP)
+                                                                              * Detailed story intro cinematics
+                                                                              * Advanced pause/settings functionality
+                                                                              * Achievement/progress tracking displays
+                                                                              * Multiple language support screens
+This screen breakdown ensures your game maintains narrative flow while providing all necessary player feedback and interaction points. Each screen serves the core themes of precision, choice, earning reward, and sacrifice.
