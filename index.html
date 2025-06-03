@@ -1030,39 +1030,54 @@
             canvas.addEventListener('mousedown', startCarvingStroke);
             canvas.addEventListener('mousemove', continueCarvingStroke);
             canvas.addEventListener('mouseup', endCarvingStroke);
+            // Add touch events
+            canvas.addEventListener('touchstart', startCarvingStroke, { passive: false });
+            canvas.addEventListener('touchmove', continueCarvingStroke, { passive: false });
+            canvas.addEventListener('touchend', endCarvingStroke);
+        }
+
+        function getEventPosition(e) {
+            const rect = e.target.getBoundingClientRect();
+            let clientX, clientY;
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            return { x: clientX - rect.left, y: clientY - rect.top };
         }
 
         function startCarvingStroke(e) {
+            if (e.type === 'touchstart') e.preventDefault(); // Prevent scrolling on touch
             isCarving = true;
-            const rect = e.target.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            carvingPath.push({x, y});
+            const pos = getEventPosition(e);
+            carvingPath.push(pos);
             
             const ctx = e.target.getContext('2d');
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(x, y);
+            ctx.moveTo(pos.x, pos.y);
         }
 
         function continueCarvingStroke(e) {
             if (!isCarving) return;
+            if (e.type === 'touchmove') e.preventDefault(); // Prevent scrolling on touch
             
-            const rect = e.target.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            carvingPath.push({x, y});
+            const pos = getEventPosition(e);
+            carvingPath.push(pos);
             
             const ctx = e.target.getContext('2d');
-            ctx.lineTo(x, y);
+            ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
             
-            // Calculate precision
             calculatePrecision();
         }
 
-        function endCarvingStroke() {
+        function endCarvingStroke(e) {
+            // No e.preventDefault() needed for touchend generally
             isCarving = false;
             checkCarvingCompletion();
         }
@@ -1120,9 +1135,14 @@
             const currentProgress = parseFloat(document.getElementById('carvingProgress').style.width) || 0;
 
             const canvas = document.getElementById('carvingCanvas');
+            // Remove mouse event listeners
             canvas.removeEventListener('mousedown', startCarvingStroke);
             canvas.removeEventListener('mousemove', continueCarvingStroke);
             canvas.removeEventListener('mouseup', endCarvingStroke);
+            // Remove touch event listeners
+            canvas.removeEventListener('touchstart', startCarvingStroke);
+            canvas.removeEventListener('touchmove', continueCarvingStroke);
+            canvas.removeEventListener('touchend', endCarvingStroke);
 
             if (precision >= successThreshold && currentProgress >= progressThreshold) {
                 gameState.hasKey = true;
