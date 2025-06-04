@@ -350,6 +350,7 @@
         #playerRunner {
             background: #8b4513; /* Existing player color */
             color: #fff; /* Ensure emoji is visible */
+            transform: scaleX(-1); /* Flip horizontally */
         }
         
         #npcRunner {
@@ -879,7 +880,7 @@
             <div id="mainMenu" class="screen active">
                 <div class="title">Choose Life Game</div>
                 <div class="subtitle">A journey of precision, choice, and sacrifice</div>
-                <button class="button" onclick="startGame()">Begin Your Trial</button>
+                <button class="button" onclick="startGame()">Begin Your Journey</button>
             </div>
             
             <!-- Level 1: Precision Carving -->
@@ -894,7 +895,7 @@
                 <div class="ui-inventory" id="level1Inventory">Keys: 0</div>
                 <div id="player"></div>
                 <img id="rock" src="rock.png" alt="Carvable Rock" onclick="startCarving()">
-                <div id="interactionPrompt">Press to carve</div>
+                <div id="interactionPrompt">Tap to carve</div>
             </div>
             
             <div id="carvingGame" class="screen">
@@ -945,7 +946,7 @@
             <!-- Level 3: Triple Trials -->
             <div id="level3Intro" class="screen">
                 <div class="title">Level 3: The Good World</div>
-                <div class="subtitle">Welcome, chosen one. Prove your worth through three trials.</div>
+                <div class="subtitle">Welcome, brave one. Defeat three villians to go to the next world.</div>
                 <button class="button" onclick="showLevel3Hub()">Enter the Trials</button>
             </div>
             
