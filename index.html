@@ -268,6 +268,14 @@
             background: linear-gradient(135deg, #4a5568, #2d3748);
             flex-direction: column;
         }
+
+        #level3HubImage {
+            display: block;
+            margin: 0 auto 1rem auto; /* Centered with bottom margin */
+            max-height: 150px; /* Adjust as needed */
+            max-width: 80%;    /* Responsive width */
+            object-fit: contain; /* Maintain aspect ratio */
+        }
         
         .trials-container {
             display: flex;
@@ -902,7 +910,9 @@
             
             <div id="level3Hub" class="screen">
                 <div class="title">Choose Your Trial</div>
-                <div style="margin: 20px 0;">Completed: <span id="trialsCompleted">0</span>/3</div>
+                <div class="subtitle" style="margin-bottom: 1rem;">Win all trials to go to the next level</div>
+                <img id="level3HubImage" src="trophy.png" alt="Trials Trophy" style="margin-bottom: 1rem;">
+                <div style="margin: 10px 0 20px 0;">Completed: <span id="trialsCompleted">0</span>/3</div>
                 <div class="trials-container">
                     <div id="speedTrialButton" class="trial" onclick="startSpeedTrial()">
                         <img src="speedRacer.png" alt="Speed Icon" class="trial-icon-image" style="transform: scaleX(-1);"> <!-- Assuming speedRacer.png faces right, flip for left-facing racer -->
