@@ -144,18 +144,14 @@
             position: absolute;
             bottom: 25%;
             right: 25%;
-            width: 120px;
-            height: 100px;
-            /* background: #696969; Removed for img */
-            /* border-radius: 20px; Removed for img, let image define its shape */
+            width: 240px; /* Was 120px */
+            height: 200px; /* Was 100px */
             cursor: pointer;
             transition: all 0.3s ease;
             object-fit: contain; /* Ensure image scales well */
-            /* box-shadow: inset 0 0 20px rgba(0,0,0,0.5); Removed for img */
         }
         
         #rock:hover {
-            /* background: #778899; Removed for img */
             transform: scale(1.05);
         }
         
@@ -336,8 +332,6 @@
             bottom: 10px;
             width: 60px; /* Adjust width as needed for the image */
             height: 80px; /* Adjust height as needed for the image */
-            /* background: #8b4513; */ /* Remove background color */
-            /* border-radius: 20px; */ /* Remove border-radius if image is not round */
             transition: left 0.1s linear;
         }
 
@@ -348,7 +342,6 @@
         }
 
         #playerRunner {
-            /* left: 0%; */ /* Initial position set by JS */
             background: #8b4513;
         }
         
@@ -428,12 +421,6 @@
             transform: translate(-50%, -50%);
             width: 120px; /* Adjust width as needed for the image */
             height: 150px; /* Adjust height as needed for the image */
-            /* background: #696969; */ /* Remove old background */
-            /* border-radius: 10px; */ /* Keep or remove based on image */
-            /* font-size: 3rem; */ /* Remove font-size for emoji */
-            /* display: flex; */ /* Remove flex if not needed for image centering */
-            /* align-items: center; */
-            /* justify-content: center; */
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 1;
@@ -828,6 +815,17 @@
                 width: 100px; /* Slightly smaller doors if screen is very narrow */
                 height: 160px;
                 font-size: 2.5rem;
+            }
+
+            #rock { /* Mobile specific styles for the rock */
+                width: 50vw; /* Responsive width for mobile */
+                height: auto; /* Maintain aspect ratio */
+                max-width: 240px; /* Cap at desktop size */
+                max-height: 200px; /* Cap at desktop size */
+                bottom: 30%; /* Adjust position for better centering with new size */
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto; /* Override desktop positioning */
             }
         }
     </style>
