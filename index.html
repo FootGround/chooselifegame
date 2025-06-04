@@ -359,8 +359,8 @@
         }
         
         #combatArena {
-            width: 400px;
-            height: 300px;
+            width: 500px; /* Was 400px */
+            height: 375px; /* Was 300px */
             background: #2d3748;
             border: 3px solid #d4af37;
             border-radius: 15px;
@@ -389,8 +389,15 @@
             transform: translate(-50%, 50%);
             width: 40px;
             height: 40px;
-            background: #8b4513;
+            background: none; /* Was #8b4513; Removed as image will be used */
             border-radius: 50%;
+            overflow: hidden; /* To clip the image to the circle */
+        }
+
+        #playerCombat img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area, good for circles */
         }
         
         #bossArena {
@@ -734,8 +741,10 @@
         }
 
         #combatArena {
-            width: 400px;
-            height: 300px;
+            width: 90%;
+            height: auto;
+            aspect-ratio: 1 / 1; /* Was 4 / 3, now square */
+            max-width: 450px; /* Was 400px */
             background: #2d3748;
             border: 3px solid #d4af37;
             border-radius: 15px;
@@ -790,8 +799,8 @@
             #combatArena {
                 width: 90%;
                 height: auto;
-                aspect-ratio: 4 / 3;
-                max-width: 400px; /* Respect original max size if screen is wide enough */
+                aspect-ratio: 1 / 1; /* Was 4 / 3, now square */
+                max-width: 450px; /* Was 400px */
             }
 
             #bossArena {
@@ -835,6 +844,13 @@
                 left: 50%;
                 transform: translateX(-50%);
                 right: auto; /* Override desktop positioning */
+            }
+
+            #altar {
+                width: 180px; /* Was 200px */
+                height: 90px;  /* Was 100px */
+                font-size: 1.3rem; /* Was 2rem, reduced for mobile */
+                padding: 5px; /* Add some padding */
             }
         }
     </style>
@@ -958,7 +974,7 @@
                 <div class="subtitle">Defeat all enemies to prove your might!</div>
                 <div id="strengthTrialInfo">Wave: <span id="currentWave">1</span>/3 | Enemies: <span id="enemiesLeft">3</span></div>
                 <div id="combatArena">
-                    <div id="playerCombat">🛡️</div>
+                    <div id="playerCombat"><img src="strengthVillian.png" alt="Player Character" style="width:100%; height:100%; object-fit:cover;"></div>
                 </div>
                 <button id="startCombat" class="button" onclick="startCombat()">Begin Combat!</button>
                 <button class="button secondary" onclick="showLevel3Hub()">Return to Hub</button>
@@ -990,13 +1006,10 @@
             </div>
             
             <div id="level4Altar" class="screen">
-                <div class="title">Sacred Altar</div>
+                <div class="title">🔥 Altar of Transformation</div>
                 <div class="subtitle">Place your collected swords upon the altar.<br>Their sacrifice will bind the essence of the Ultimate Key into a sacred stone.</div>
                 <div class="ui-inventory">Swords Available: <span id="swordCount">0</span> <img src="sword.png" alt="Sword" class="sword-image-style large"></div>
-                <div id="altar" onclick="performSacrifice()">🔥 Altar of Transformation</div>
-                <div style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
-                    Click the altar to sacrifice your swords.
-                </div>
+                <div id="altar" onclick="performSacrifice()">Tap to enter</div>
             </div>
             
             <div id="level4RockChipping" class="screen">
@@ -1549,21 +1562,46 @@
             enemiesRemaining = currentWave + 2; // 3, 4, 5 enemies per wave
             document.getElementById('currentWave').textContent = currentWave;
             document.getElementById('enemiesLeft').textContent = enemiesRemaining;
+
+            // Announce the current wave
+            const arena = document.getElementById('combatArena');
+            createFloatingText(`Wave ${currentWave} Incoming!`, arena);
             
             // Clear any existing enemies
             const existingEnemies = document.querySelectorAll('.enemy');
             existingEnemies.forEach(enemy => enemy.remove());
+
+            // Clear previous interval if any, before setting a new one
+            if (enemySpawnInterval) clearInterval(enemySpawnInterval);
             
+            // Determine spawn delay based on current wave
+            let spawnDelay = 2000; // Default for Wave 1
+            if (currentWave === 2) {
+                spawnDelay = 1600; // Faster for Wave 2
+            }
+            if (currentWave === 3) {
+                spawnDelay = 1200; // Even faster for Wave 3
+            }
+
             // Start spawning enemies
-            spawnEnemy();
+            spawnEnemy(); // Spawn one immediately
             enemySpawnInterval = setInterval(() => {
-                if (enemiesRemaining > 0) {
+                // Only spawn if we still need to spawn enemies for the current wave total
+                // and not exceeding the total number of enemies for this wave.
+                // The check `enemiesRemaining > 0` in updateEnemyCount handles when to stop trying to WIN the wave.
+                // This logic needs to track how many have been spawned for *this* wave.
+                
+                // Let's refine this: we need to spawn `currentWave + 2` enemies in total for this wave.
+                // The `enemiesRemaining` counts down as they are defeated.
+                // We should ensure we don't spawn more than intended for the wave.
+                const spawnedForThisWave = document.querySelectorAll('#combatArena .enemy').length;
+                if (spawnedForThisWave < (currentWave + 2)) {
                     spawnEnemy();
                 }
-            }, 2000);
+            }, spawnDelay);
 
-            // Add click handler for combat arena
-            const arena = document.getElementById('combatArena');
+            // Add click handler for combat arena (ensure it's not added multiple times)
+            arena.removeEventListener('click', handleCombatClick); // Remove first to be safe
             arena.addEventListener('click', handleCombatClick);
         }
 
